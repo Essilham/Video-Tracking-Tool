@@ -1,11 +1,14 @@
 # Video Tracking Tool
 
-This tool provides an interactive way to track objects in videos using Optical Flow or Object Tracking algorithms.
+An interactive tool for tracking objects in videos using algorithms like Optical Flow and Object Tracking. Users can explore predefined synthetic videos and customize tracking settings.
 
 ## Features
-- Upload a video for processing.
-- Choose between Optical Flow and Object Tracking.
-- View and download the processed video.
+- Choose from predefined synthetic videos (moving circles or rectangles).
+- Select tracking algorithms:
+  - Optical Flow: Tracks motion of multiple objects.
+  - Object Tracking: Tracks a specific object with bounding boxes.
+- Visualize tracking results and download processed videos.
+
 
 ## How to Use
 1. Clone the repository:
