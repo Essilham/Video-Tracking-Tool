@@ -1,28 +1,35 @@
 import cv2
+import tempfile
 
 def track_objects(video_path):
     tracker = cv2.TrackerCSRT_create()
     cap = cv2.VideoCapture(video_path)
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-    out_path = "./outputs/object_tracking_output.mp4"
-    out = cv2.VideoWriter(out_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
 
-    ret, frame = cap.read()
-    bbox = cv2.selectROI("Select Object", frame, fromCenter=False, showCrosshair=True)
-    tracker.init(frame, bbox)
+    # Create a temporary file for the processed video
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
+        out_path = temp_file.name
+        out = cv2.VideoWriter(out_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
 
-    while cap.isOpened():
+        # Initialize tracker
         ret, frame = cap.read()
-        if not ret:
-            break
+        bbox = cv2.selectROI("Select Object to Track", frame, fromCenter=False, showCrosshair=True)
+        tracker.init(frame, bbox)
 
-        success, box = tracker.update(frame)
-        if success:
-            x, y, w, h = map(int, box)
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        while cap.isOpened():
+            ret, frame = cap.read()
+            if not ret:
+                break
 
-        out.write(frame)
+            # Update tracker
+            success, box = tracker.update(frame)
+            if success:
+                x, y, w, h = map(int, box)
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)  # Draw bounding box
 
-    cap.release()
-    out.release()
+            out.write(frame)
+
+        cap.release()
+        out.release()
+
     return out_path
