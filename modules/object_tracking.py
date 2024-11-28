@@ -1,20 +1,34 @@
 import cv2
 import tempfile
+import streamlit as st
 
 def track_objects(video_path):
-    tracker = cv2.TrackerCSRT_create()
+    # Load the video
     cap = cv2.VideoCapture(video_path)
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    ret, frame = cap.read()
+    if not ret:
+        raise ValueError("Failed to load the video.")
 
-    # Create a temporary file for the processed video
+    # Get frame dimensions
+    frame_height, frame_width = frame.shape[:2]
+
+    # User-defined bounding box via Streamlit sliders
+    st.sidebar.subheader("Set Object Bounding Box")
+    x = st.sidebar.slider("X Coordinate", 0, frame_width, 50)
+    y = st.sidebar.slider("Y Coordinate", 0, frame_height, 50)
+    w = st.sidebar.slider("Width", 10, frame_width - x, 100)
+    h = st.sidebar.slider("Height", 10, frame_height - y, 100)
+    bbox = (x, y, w, h)
+
+    # Initialize the tracker
+    tracker = cv2.TrackerKCF_create()  # Alternatively, use cv2.TrackerCSRT_create()
+    tracker.init(frame, bbox)
+
+    # Prepare video writer
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
         out_path = temp_file.name
         out = cv2.VideoWriter(out_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
-
-        # Initialize tracker
-        ret, frame = cap.read()
-        bbox = cv2.selectROI("Select Object to Track", frame, fromCenter=False, showCrosshair=True)
-        tracker.init(frame, bbox)
 
         while cap.isOpened():
             ret, frame = cap.read()
