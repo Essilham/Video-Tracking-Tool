@@ -1,9 +1,11 @@
-import cv2
-import tempfile
-import streamlit as st
+import os
+
+def load_predefined_video(video_option):
+    # Load videos based on user selection
+    if video_option == "Synthetic Cells":
+        return "./assets/synthetic_cells.mp4"
+    elif video_option == "Synthetic Vehicles":
+        return "./assets/synthetic_vehicles.mp4"
 
 def display_video(video_path):
-    # Temporarily store video for Streamlit video player
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as tmp:
-        tmp.write(open(video_path, "rb").read())
-        st.video(tmp.name)
+    st.video(video_path)
