@@ -10,3 +10,7 @@ This tool provides an interactive way to track objects in videos using Optical F
 ## How to Use
 1. Clone the repository:
 git clone https://github.com/Essilham/Video-Tracking-Tool.git
+2. Install dependencies:
+pip install -r requirements.txt
+3. run the app:
+streamlit run app.py
