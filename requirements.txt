@@ -1,3 +1,6 @@
 streamlit
 opencv-python-headless
 numpy
+torch
+torchvision
+ultralytics  # YOLO implementation package
