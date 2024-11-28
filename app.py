@@ -1,6 +1,6 @@
 import streamlit as st
 from modules.video_loader import load_predefined_video, display_video
-from modules.optical_flow import track_optical_flow
+from modules.optical_flow import dense_optical_flow 
 from modules.object_tracking import track_objects
 from modules.yolo import yolo_object_detection
 
@@ -32,7 +32,7 @@ if st.sidebar.button("Start Processing"):
 
     # Process Video Based on User Selection
     if functionality == "Optical Flow":
-        processed_video_path = track_optical_flow(video_path)
+        processed_video_path = dense_optical_flow(video_path)
     elif functionality == "Object Tracking":
         processed_video_path = track_objects(video_path)
     elif functionality == "YOLO (Object Detection)":
