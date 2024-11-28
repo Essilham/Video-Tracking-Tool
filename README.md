@@ -1,13 +1,17 @@
 # Video Tracking Tool
 
-An interactive tool for tracking objects in videos using algorithms like Optical Flow and Object Tracking. Users can explore predefined synthetic videos and customize tracking settings.
+An interactive tool for testing various object tracking methods on synthetic videos. This app demonstrates:
+1. **Optical Flow**: Tracks motion of multiple objects.
+2. **Object Tracking**: Tracks a specific object using bounding boxes.
+3. **Background Subtraction**: Detects motion by identifying objects against a static background.
 
 ## Features
 - Choose from predefined synthetic videos (moving circles or rectangles).
-- Select tracking algorithms:
-  - Optical Flow: Tracks motion of multiple objects.
-  - Object Tracking: Tracks a specific object with bounding boxes.
-- Visualize tracking results and download processed videos.
+- Test multiple tracking methods:
+  - Optical Flow
+  - Object Tracking
+  - Background Subtraction
+- Visualize results and download processed videos.
 
 
 ## How to Use
